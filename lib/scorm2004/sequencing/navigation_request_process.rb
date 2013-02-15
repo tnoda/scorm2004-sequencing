@@ -35,6 +35,8 @@ module Scorm2004
           abandon_navigation_request_process(tree, req)
         when :jump
           jump_navigation_request_process(tree, req, target)
+        else
+          sequencing_exception('NB.2.1-13')
         end
       end
 

@@ -412,4 +412,9 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
       end
     end
   end
+
+  describe 'invalid navigation request' do
+    let(:req) { :invalid }
+    it_behaves_like 'sequencing exception'
+  end
 end
