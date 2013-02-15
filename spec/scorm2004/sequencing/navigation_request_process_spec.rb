@@ -328,6 +328,18 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
     end
   end
 
-  describe 'Exit All navigation request'
+  describe 'Exit All navigation request' do
+    let(:req) { :exit_all }
+
+    context 'when the current activity is not defined' do
+      it_behaves_like 'sequencing exception'
+    end
+
+    context 'when the current activity is defined' do
+      before { tree.current_activity = :dummy }
+      it { process.should == [:exit_all, :exit] }
+    end
+  end
+
   describe 'Suspend All navigation request'
 end
