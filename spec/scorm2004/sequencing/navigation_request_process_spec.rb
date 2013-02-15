@@ -301,7 +301,33 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
   end
 
   describe 'Jump navigation request'
-  describe 'Exit navigation request'
+
+  describe 'Exit navigation request' do
+    let(:req) { :exit }
+
+    context 'when the current activity is not defined' do
+      it_behaves_like 'sequencing exception'
+    end
+
+    context 'when the current activity is defined' do
+      before do
+        tree.current_activity = double('current activity')
+      end
+
+      context 'when the current activity is not active' do
+        before { tree.current_activity.stub(:active?).and_return(false) }
+        it_behaves_like 'sequencing exception'
+      end
+
+      context 'when the current activity is active' do
+        before { tree.current_activity.stub(:active?).and_return(true) }
+        it 'terminates the current activity' do
+          process.should == [:exit, :exit]
+        end
+      end
+    end
+  end
+
   describe 'Exit All navigation request'
   describe 'Suspend All navigation request'
 end
