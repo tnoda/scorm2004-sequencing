@@ -281,7 +281,7 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
                 end
               end
 
-              context 'whtn the current activity is not active' do
+              context 'when the current activity is not active' do
                 before { tree.current_activity.stub(:active?).and_return(false) }
                 it 'issues the choice sequencing request' do
                   process.should == [nil, :choice]
