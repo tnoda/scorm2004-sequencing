@@ -31,6 +31,8 @@ module Scorm2004
           exit_all_navigation_request_process(tree, req)
         when :suspend_all
           suspend_all_navigation_request_process(tree, req)
+        when :abandon
+          abandon_navigation_request_process(tree, req)
         end
       end
 
@@ -93,6 +95,12 @@ module Scorm2004
       def suspend_all_navigation_request_process(tree, req)
         sequencing_exception('NB.2.12') unless tree.current_activity
         [:suspend_all, :exit]
+      end
+
+      def abandon_navigation_request_process(tree, req)
+        c = tree.current_activity or sequencing_exception('NB.2.1-2')
+        sequencing_exception('NB.2.1-12') unless c.active?
+        [:abandon, :exit]
       end
     end
   end

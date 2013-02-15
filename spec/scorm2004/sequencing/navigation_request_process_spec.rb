@@ -353,4 +353,28 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
       it { process.should == [:suspend_all, :exit]}
     end
   end
+
+  describe 'Abandon navigation request' do
+    let(:req) { :abandon }
+
+    context 'when the current activity is not defined' do
+      it_behaves_like 'sequencing exception'
+    end
+
+    context 'when the current activity is defined' do
+      before { tree.current_activity = double('current activity') }
+
+      context 'and is not active' do
+        before { tree.current_activity.stub(:active?).and_return(false) }
+        it_behaves_like 'sequencing exception'
+      end
+
+      context 'and is active' do
+        before { tree.current_activity.stub(:active?).and_return(true) }
+        it 'issues an abandon termination request' do
+          process.should == [:abandon, :exit]
+        end
+      end
+    end
+  end
 end
