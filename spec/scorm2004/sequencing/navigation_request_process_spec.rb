@@ -300,7 +300,42 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
     end
   end
 
-  describe 'Jump navigation request'
+  describe 'Jump navigation request' do
+    let(:req) { :jump }
+
+    context 'when the target activity is not defined' do
+      before { tree.activities = {} }
+      it_behaves_like 'sequencing exception'
+    end
+
+    context 'when the target activity is defined' do
+      before { tree.activities = { target => double('target activity') } }
+
+      context 'is available' do
+        before do
+          t =tree.activities[target]
+          p = double('parent activity')
+          p.stub(:available_children).and_return([t])
+          t.stub(:parent).and_return(p)
+        end
+
+        it 'issues an exit termination request' do
+          process.should == [:exit, :jump]
+        end
+      end
+
+      context 'is unavailable' do
+        before do
+          t = tree.activities[target]
+          p = double('parent activity')
+          p.stub(:available_children).and_return([])
+          t.stub(:parent).and_return(p)
+        end
+
+        it_behaves_like 'sequencing exception'
+      end
+    end
+  end
 
   describe 'Exit navigation request' do
     let(:req) { :exit }
