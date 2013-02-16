@@ -109,9 +109,7 @@ module Scorm2004
 
       def jump_navigation_request_process(tree, req, target)
         t = tree.activities[target]
-        unless t && t.parent.available_children.include?(t)
-          sequencing_exception('NB.2.1-11')
-        end
+        sequencing_exception('NB.2.1-11') unless t && t.available?
         [:exit, :jump]
       end
     end

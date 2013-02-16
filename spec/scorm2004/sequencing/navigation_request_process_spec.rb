@@ -312,12 +312,7 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
       before { tree.activities = { target => double('target activity') } }
 
       context 'is available' do
-        before do
-          t =tree.activities[target]
-          p = double('parent activity')
-          p.stub(:available_children).and_return([t])
-          t.stub(:parent).and_return(p)
-        end
+        before { tree.activities[target].stub(:available?).and_return(true) }
 
         it 'issues an exit termination request' do
           process.should == [:exit, :jump]
@@ -325,13 +320,7 @@ describe Scorm2004::Sequencing::NavigationRequestProcess do
       end
 
       context 'is unavailable' do
-        before do
-          t = tree.activities[target]
-          p = double('parent activity')
-          p.stub(:available_children).and_return([])
-          t.stub(:parent).and_return(p)
-        end
-
+        before { tree.activities[target].stub(:available?).and_return(false) }
         it_behaves_like 'sequencing exception'
       end
     end
