@@ -12,12 +12,12 @@ describe Scorm2004::Sequencing::ActivityStateInformation do
   end
 
   describe 'defaults' do
-    its(:activity_is_active) { should == false }
-    its(:activity_is_suspended) { should == false }
-    
+    its(:activity_is_active) { should be_false }
+    its(:activity_is_suspended) { should be_false }
+
     context 'for a leaf activity' do
       before { subject.stub(:children).and_return([]) }
-      its(:available_children) { should == [] }
+      its(:available_children) { should be_empty }
     end
 
     context 'for a cluster activity' do
@@ -51,8 +51,8 @@ describe Scorm2004::Sequencing::ActivityStateInformation do
       end
     end
 
-    its(:activity_is_active) { should == true }
-    its(:activity_is_suspended) { should == true }
+    its(:activity_is_active) { should be_true }
+    its(:activity_is_suspended) { should be_true }
     its(:available_children) { should == %w( foo bar baz ) }
 
     describe '#activity_is_active=' do
