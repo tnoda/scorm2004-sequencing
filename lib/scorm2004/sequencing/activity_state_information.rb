@@ -16,6 +16,9 @@ module Scorm2004
         end
       end
 
+      alias :active? :activity_is_active
+      alias :suspended? :activity_is_suspended
+
       def available_children
         activity_state_information['available_children'] ||= children.map(&:identifier)
       end

@@ -15,6 +15,11 @@ describe Scorm2004::Sequencing::ActivityStateInformation do
     its(:activity_is_active) { should be_false }
     its(:activity_is_suspended) { should be_false }
 
+    describe 'aliases' do
+      its(:active?) { should be_false }
+      its(:suspended?) { should be_false }
+    end
+
     context 'for a leaf activity' do
       before { subject.stub(:children).and_return([]) }
       its(:available_children) { should be_empty }
@@ -54,6 +59,11 @@ describe Scorm2004::Sequencing::ActivityStateInformation do
     its(:activity_is_active) { should be_true }
     its(:activity_is_suspended) { should be_true }
     its(:available_children) { should == %w( foo bar baz ) }
+
+    describe 'aliases' do
+      its(:active?) { should be_true }
+      its(:suspended?) { should be_true }
+    end
 
     describe '#activity_is_active=' do
       it 'sets Activity is Active' do
