@@ -8,6 +8,15 @@ module Scorm2004
       include Cam::Objective
       include ObjectiveProgressInformation
 
+      # @param activity [Activity] The activity to which this objective belongs.
+      # @param objective [Hash] The object representation of the <objective> or <primaryObjective> element.
+      # @param state [Hash] The learner status.
+      def initialize(activity, objective, state)
+        @activity = activity
+        @objective = objective || {}
+        @state = state || {}
+      end
+
       def satisfied?
         progress_status && satisfied_status
       end
