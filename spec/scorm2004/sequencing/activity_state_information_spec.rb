@@ -3,15 +3,15 @@ require 'scorm2004/sequencing/activity_state_information'
 
 describe Scorm2004::Sequencing::ActivityStateInformation do
   subject do
-    obj = Object.new.extend(Scorm2004::Sequencing::ActivityStateInformation)
-    obj.instance_eval do
-      @identifier = 'example'
-      @state = {}
-    end
-    obj
+    a = double('activity')
+    a.extend(Scorm2004::Sequencing::ActivityStateInformation)
+    a.stub(:identifier).and_return('example')
+    a
   end
 
   describe 'defaults' do
+    before { subject.stub(:state).and_return({}) }
+
     its(:activity_is_active) { should be_false }
     its(:activity_is_suspended) { should be_false }
 
@@ -41,19 +41,18 @@ describe Scorm2004::Sequencing::ActivityStateInformation do
 
   describe 'example' do
     before do
-      subject.instance_eval do
-        @state = {
-          'activities' => {
-            @identifier => {
-              'activity_state_information' => {
-                'activity_is_active' => true,
-                'activity_is_suspended' => true,
-                'available_children' => %w( foo bar baz )
-              }
+      state = {
+        'activities' => {
+          'example' => {
+            'activity_state_information' => {
+              'activity_is_active' => true,
+              'activity_is_suspended' => true,
+              'available_children' => %w( foo bar baz )
             }
           }
         }
-      end
+      }
+      subject.stub(:state).and_return(state)
     end
 
     its(:activity_is_active) { should be_true }

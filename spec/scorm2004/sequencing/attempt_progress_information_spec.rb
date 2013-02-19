@@ -3,15 +3,14 @@ require 'scorm2004/sequencing/attempt_progress_information'
 
 describe Scorm2004::Sequencing::AttemptProgressInformation do
   subject do
-    obj = Object.new.extend(Scorm2004::Sequencing::AttemptProgressInformation)
-    obj.instance_eval do
-      @identifier = 'example'
-      @state = {}
-    end
-    obj
+    a = double('activity')
+    a.extend(Scorm2004::Sequencing::AttemptProgressInformation)
+    a.stub(:identifier).and_return('example')
+    a
   end
 
   describe 'defaults' do
+    before { subject.stub(:state).and_return({}) }
     its(:attempt_progress_status) { should == false }
     its(:attempt_completion_status) { should == false }
     its(:attempt_completion_amount_status) { should == false }
@@ -22,22 +21,21 @@ describe Scorm2004::Sequencing::AttemptProgressInformation do
 
   describe 'example' do
     before do
-      subject.instance_eval do
-        @state = {
-          'activities' => {
-            'example' => {
-              'attempt_progress_information' => {
-                'attempt_progress_status' => true,
-                'attempt_completion_status' => true,
-                'attempt_completion_amount_status' => true,
-                'attempt_completion_amount' => 0.2,
-                'attempt_absolute_duration' => 0.4,
-                'attempt_experienced_duration' => 0.6                
-              }
+      state = {
+        'activities' => {
+          'example' => {
+            'attempt_progress_information' => {
+              'attempt_progress_status' => true,
+              'attempt_completion_status' => true,
+              'attempt_completion_amount_status' => true,
+              'attempt_completion_amount' => 0.2,
+              'attempt_absolute_duration' => 0.4,
+              'attempt_experienced_duration' => 0.6
             }
           }
         }
-      end
+      }
+      subject.stub(:state).and_return(state)
     end
 
     its(:attempt_progress_status) { should == true }

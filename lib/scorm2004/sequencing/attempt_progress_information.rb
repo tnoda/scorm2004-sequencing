@@ -23,7 +23,7 @@ module Scorm2004
       private
 
       def attempt_progress_information
-        ((@state['activities'] ||= {})[@identifier] ||= {})['attempt_progress_information'] ||= {}
+        ((state['activities'] ||= {})[identifier] ||= {})['attempt_progress_information'] ||= {}
       end
     end
   end

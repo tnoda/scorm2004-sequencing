@@ -30,7 +30,7 @@ module Scorm2004
       private
 
       def activity_state_information
-        ((@state['activities'] ||= {})[@identifier] ||= {})['activity_state_information'] ||= {}
+        ((state['activities'] ||= {})[identifier] ||= {})['activity_state_information'] ||= {}
       end
     end
   end
