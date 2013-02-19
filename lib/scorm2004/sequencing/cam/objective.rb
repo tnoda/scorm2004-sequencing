@@ -1,4 +1,4 @@
-require 'scorm2004/sequencing'
+require 'scorm2004/sequencing/cam'
 
 module Scorm2004
   module Sequencing
