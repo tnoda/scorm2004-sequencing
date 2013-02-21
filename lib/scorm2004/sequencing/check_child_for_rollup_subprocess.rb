@@ -4,6 +4,9 @@ require 'forwardable'
 module Scorm2004
   module Sequencing
     # Check Child for Rollup Subprocess [RB.1.4.2]
+    #
+    # @example Apply the Check Child for Rollup Subprocess to a +child+ and a Rollup Action.
+    #   CheckChildForRollupSubprocess.new('Satisfied').call(child)
     class CheckChildForRollupSubprocess
       extend Forwardable
       def_delegators(:@child,
