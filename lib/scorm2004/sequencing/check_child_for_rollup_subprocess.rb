@@ -6,7 +6,7 @@ module Scorm2004
     # Check Child for Rollup Subprocess [RB.1.4.2]
     class CheckChildForRollupSubprocess
       extend Forwardable
-      def_delegator(:@child,
+      def_delegators(:@child,
         :rollup_objective_satisfied, :rollup_progress_completion,
         :required_for_satisfied, :required_for_not_satisfied,
         :required_for_completed, :required_for_incomplete,
