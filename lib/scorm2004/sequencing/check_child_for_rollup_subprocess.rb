@@ -6,7 +6,7 @@ module Scorm2004
     # Check Child for Rollup Subprocess [RB.1.4.2]
     #
     # @example Apply the Check Child for Rollup Subprocess to a +child+ and a Rollup Action.
-    #   CheckChildForRollupSubprocess.new('Satisfied').call(child)
+    #   CheckChildForRollupSubprocess.new.call(child, 'Satisfied')
     class CheckChildForRollupSubprocess
       extend Forwardable
       def_delegators(:@child,
@@ -16,12 +16,12 @@ module Scorm2004
         :activity_progress_status, :activity_attempt_count,
         :activity_is_suspended)
 
-      def initialize(action)
-        @action = action
-      end
+      attr_reader :rollup_action
 
-      def call(child)
+      def call(child, rollup_action)
         @child = child
+        @rollup_action = rollup_action
+        
         rollup_control &&
           (!required?('ifNotSuspended') || !suspended?) &&
           (!required?('ifAttempted') || attempted?) &&
@@ -37,10 +37,6 @@ module Scorm2004
         when /Completed|Incomplete/
           rollup_progress_completion
         end
-      end
-
-      def rollup_action
-        @action
       end
 
       def required?(cond)
