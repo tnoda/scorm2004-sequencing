@@ -7,6 +7,8 @@ module Scorm2004
     class RollupRule
       include RollupRuleDescription
 
+      attr_reader :rule
+
       def initialize(rule)
         @rule = rule
       end
