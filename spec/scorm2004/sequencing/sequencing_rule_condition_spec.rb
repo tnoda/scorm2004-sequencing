@@ -34,23 +34,41 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
     end
   end
 
+  shared_context 'activity with referenced objective' do |ref, prog, sat, ms, nm|
+    let(:activity) do
+      o = double('referenced objective')
+      o.stub( :id => 'obj123',
+        :progress_status => prog, :satisfied_status => sat,
+        :measure_status => ms, :normalized_measure => nm)
+      a = double('activity')
+      objectives = Array.new(4, OpenStruct.new)
+      objectives << o if ref
+      a.stub(:objectives => objectives)
+      a
+    end
+  end
+
+  shared_context 'rule condition' do
+    let(:rule_condition) do
+      c = double('rule condition')
+      c.stub(:referenced_objective => 'obj123')
+      c
+    end
+  end
+
   describe Scorm2004::Sequencing::SequencingRuleCondition::SatisfiedEvaluator do
-    shared_examples 'satisfied evaluator' do |prog, sat|
-      it "returns #{prog && sat} against the referenced objective: " +
-        "progress_status = #{prog}, satisfied_status = #{sat}" do
-        o = double('referenced objective')
-        o.stub(:progress_status => prog, :satisfied_status => sat, :id => 'obj123')
-        a = double('activity')
-        dummy_obj = OpenStruct.new
-        a.stub(:objectives => [dummy_obj, dummy_obj, o, dummy_obj])
-        c = double('rule condition')
-        c.stub(:referenced_objective => 'obj123')
+    shared_examples 'satisfied evaluator' do |ref, prog, sat|
+      include_context 'rule condition'
+      include_context 'activity with referenced objective', ref, prog, sat
+
+      it "returns #{ref && prog && sat} against the referenced objective: " +
+        "exists = #{ref}, progress_status = #{prog}, satisfied_status = #{sat}" do
         Scorm2004::Sequencing::SequencingRuleCondition::SatisfiedEvaluator
-          .new(c).call(a).should == (prog && sat)
+          .new(rule_condition).call(activity).should == (ref && prog && sat)
       end
     end
 
-    [true, false].repeated_permutation(2).each do |pair|
+    [true, false].repeated_permutation(3).each do |pair|
       it_behaves_like 'satisfied evaluator', *pair
     end
   end
