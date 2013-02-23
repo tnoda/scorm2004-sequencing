@@ -3,6 +3,11 @@ require 'forwardable'
 
 module Scorm2004
   module Sequencing
+    # Evaluate Rollup Conditions Subprocess [RB.1.4.1]
+    #
+    # @example
+    #   EvaluateRollupConditionsSubprocess.new(rollup_rule).call(child)
+    #
     class EvaluateRollupConditionsSubprocess
       extend Forwardable
       def_delegators :@rule, :conditions, :condition_combination
