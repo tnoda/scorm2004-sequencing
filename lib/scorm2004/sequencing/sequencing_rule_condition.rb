@@ -1,4 +1,5 @@
 require 'scorm2004/sequencing'
+require 'forwardable'
 
 module Scorm2004
   module Sequencing
@@ -45,6 +46,9 @@ module Scorm2004
 
       class SequencingRuleConditionEvaluator
         attr_reader :rule_condition, :activity
+
+        extend Forwardable
+        def_delegators :@rule_condition, :measure_threshold
 
         def initialize(rule_condition)
           @rule_condition = rule_condition
