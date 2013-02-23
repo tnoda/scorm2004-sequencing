@@ -8,7 +8,9 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
         described_class.new({})
       end
 
-      its(:to_s) { should be_empty }
+      it 'must have Rule Condition' do
+        expect { subject.to_s }.to raise_error
+      end
       its(:referenced_objective) { should be_nil }
       its(:measure_threshold) { should be_nil }
       its(:operator) { should == 'NO-OP' }

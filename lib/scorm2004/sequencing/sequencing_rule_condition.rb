@@ -4,8 +4,24 @@ module Scorm2004
   module Sequencing
     class SequencingRuleCondition
       module Description
+        VOCABULARY = [
+          'Satisfied',
+          'Objective Status Known',
+          'Objective Measure Known',
+          'Objective Measure Greater Than',
+          'Objective Measure Less Than',
+          'Completed',
+          'Activity Progress Known',
+          'Attempted',
+          'Attempt Limit Exceeded',
+          'Always'
+        ]
+
         def rule_condition
-          normalize(@d['condition'])
+          cond = @d['condition'] or raise 'Could not find Sequencing Rule Condition'
+          VOCABULARY.find { |v|
+            v.delete(' ').downcase == cond.downcase
+          } or raise "invalid Sequencing Rule Condition: #{cond}"
         end
         alias :to_s :rule_condition
 
@@ -23,12 +39,6 @@ module Scorm2004
           ('not' == @d['operator']) ? 'Not' : 'NO-OP'
         end
         alias :operator :rule_condition_operator
-
-        private
-
-        def normalize(str)
-          str.to_s.scan(/[A-Z]?[a-z]+/).map(&:capitalize).join(' ')
-        end
       end
 
       include Description
@@ -36,6 +46,18 @@ module Scorm2004
       # @param description [Hash] a hash object that represents a <ruleCondition> element
       def initialize(description)
         @d = description
+      end
+
+      def evaluate(activity)
+        klass = self.class.const_get(rule_condition.delete(' ') + 'Evaluator')
+        result = klass.new.call(activity)
+        if result.nil?
+          nil
+        elsif operator == 'Not'
+          !result
+        else
+          result
+        end
       end
     end
   end
