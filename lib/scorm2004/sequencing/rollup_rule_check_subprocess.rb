@@ -10,7 +10,7 @@ module Scorm2004
       def call(activity, rollup_action)
         activity.rollup_rules(rollup_action).any? do |rollup_rule|
           bag = children(activity, rollup_action).map do |c|
-            rollup_rule.evaluate(c)
+            rollup_rule.evaluate(c) # Evaluate Rollup Conditions Subprocess
           end
           !bag.empty? &&
             case rollup_rule.child_activity_set
