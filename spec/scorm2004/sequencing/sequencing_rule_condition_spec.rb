@@ -72,4 +72,21 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'satisfied evaluator', *pair
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveStatusKnownEvaluator do
+    shared_examples 'objective status known evaluator' do |ref, prog|
+      include_context 'rule condition'
+      include_context 'activity with referenced objective', ref, prog
+
+      it "returns #{ref && prog} against the referenced objective: " +
+        "exists = #{ref}, progress_status = #{prog}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveStatusKnownEvaluator
+          .new(rule_condition).call(activity).should == (ref && prog)
+      end
+    end
+
+    [true, false].repeated_permutation(2).each do |pair|
+      it_behaves_like 'objective status known evaluator', *pair
+    end
+  end
 end
