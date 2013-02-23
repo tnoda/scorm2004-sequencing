@@ -3,7 +3,7 @@ require 'ostruct'
 
 module Scorm2004
   module Sequencing
-    # Objective Rollup Using Default Rule derived from
+    # Objective Rollup Using Default Rule Process derived from
     # Objective Rollup Using Rules Process [RB.1.2b] line 1.
     #
     # @example
