@@ -71,7 +71,7 @@ module Scorm2004
 
         def call(activity)
           super
-          o && o.progress_status && o.satisfied_status
+          o && o.progress_status && o.satisfied_status || false
         end
       end
 
