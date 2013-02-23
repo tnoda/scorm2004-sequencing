@@ -10,7 +10,7 @@ module Scorm2004
           @activity.attempt_completion_amount_status = false
           return
         end
-        
+
         @activity.attempt_completion_amount_status = true
         @activity.attempt_completion_amount =
           total_weighted_measure / counted_measure
