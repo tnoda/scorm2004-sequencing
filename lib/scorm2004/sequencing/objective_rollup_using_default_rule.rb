@@ -3,6 +3,11 @@ require 'ostruct'
 
 module Scorm2004
   module Sequencing
+    # Objective Rollup Using Default Rule derived from
+    # Objective Rollup Using Rules Process [RB.1.2b] line 1.
+    #
+    # @example
+    #   ObjectiveRollupUsingDefaultRule.new.call(activity)
     class ObjectiveRollupUsingDefaultRule
       def call(activity)
         return unless ro(activity)
