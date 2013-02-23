@@ -43,6 +43,38 @@ module Scorm2004
 
       include Description
 
+      class SequencingRuleConditionEvaluator
+        attr_reader :rule_condition, :activity
+
+        def initialize(rule_condition)
+          @rule_condition = rule_condition
+        end
+
+        def call(activity)
+          @activity = activity
+        end
+
+        private
+
+        def referenced_objective
+          activity.objectives.find { |objective|
+            objective.id == rule_condition.referenced_objective
+          }
+        end
+        alias :o :referenced_objective
+      end
+
+      class SatisfiedEvaluator < SequencingRuleConditionEvaluator
+        def initialize(rollup_condition)
+          super
+        end
+
+        def call(activity)
+          super
+          o && o.progress_status && o.satisfied_status
+        end
+      end
+
       # @param description [Hash] a hash object that represents a <ruleCondition> element
       def initialize(description)
         @d = description
@@ -50,7 +82,7 @@ module Scorm2004
 
       def evaluate(activity)
         klass = self.class.const_get(rule_condition.delete(' ') + 'Evaluator')
-        result = klass.new.call(activity)
+        result = klass.new(self).call(activity)
         if result.nil?
           nil
         elsif operator == 'Not'
