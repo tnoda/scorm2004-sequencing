@@ -89,4 +89,21 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'objective status known evaluator', *pair
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureKnownEvaluator do
+    shared_examples 'objective measure known evaluator' do |ref, measure_status|
+      include_context 'rule condition'
+      include_context 'activity with referenced objective', ref, nil, nil, measure_status
+
+      it "returns #{ref && measure_status} against the referenced objective: " +
+        "exists = #{ref}, measure_status = #{measure_status}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureKnownEvaluator
+        .new(rule_condition).call(activity).should == (ref && measure_status)
+      end
+    end
+
+    [true, false].repeated_permutation(2).each do |pair|
+      it_behaves_like 'objective measure known evaluator', *pair
+    end
+  end
 end
