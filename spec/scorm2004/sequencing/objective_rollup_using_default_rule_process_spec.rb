@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'scorm2004/sequencing/objective_rollup_using_default_rule'
+require 'scorm2004/sequencing/objective_rollup_using_default_rule_process'
 
-describe Scorm2004::Sequencing::ObjectiveRollupUsingDefaultRule do
+describe Scorm2004::Sequencing::ObjectiveRollupUsingDefaultRuleProcess do
   context 'without a rolled-up objective' do
     let(:activity) do
       a = double('activity')

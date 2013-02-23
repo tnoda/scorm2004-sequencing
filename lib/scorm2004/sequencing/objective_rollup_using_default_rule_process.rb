@@ -8,7 +8,7 @@ module Scorm2004
     #
     # @example
     #   ObjectiveRollupUsingDefaultRule.new.call(activity)
-    class ObjectiveRollupUsingDefaultRule
+    class ObjectiveRollupUsingDefaultRuleProcess
       def call(activity)
         return unless ro(activity)
 
