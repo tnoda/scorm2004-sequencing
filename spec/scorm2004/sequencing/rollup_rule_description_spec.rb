@@ -37,7 +37,7 @@ describe Scorm2004::Sequencing::RollupRuleDescription do
 
   describe 'example without conditions' do
     it_behaves_like 'rollup rule', 'Completed', 'All', 'At Least Count', 0.5, 3, [] do
-      include_context 'rollup rule attributes', 'Completed', 'All', 'atLeastCount', 0.5, 3
+      include_context 'rollup rule attributes', 'completed', 'All', 'atLeastCount', 0.5, 3
     end
   end
 end

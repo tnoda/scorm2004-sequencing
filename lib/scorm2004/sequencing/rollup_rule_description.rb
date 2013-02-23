@@ -6,13 +6,13 @@ module Scorm2004
       def action
         action = (rule['rollup_action'] || {})['action']
         case action
-        when /satisfied/i
+        when 'satisfied'
           'Satisfied'
-        when /notSatisfied/i
+        when 'notSatisfied'
           'Not Satisfied'
-        when /completed/i
+        when 'completed'
           'Completed'
-        when /incomplete/i
+        when 'incmoplete'
           'Incomplete'
         else
           'Satisfied'
