@@ -129,4 +129,26 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'objective measure greater than evaluator', *pair
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureLessThanEvaluator do
+    shared_examples 'objective measure greater than evaluator' do |ref, ms, nm, mt|
+      include_context 'rule condition', mt
+      include_context 'activity with referenced objective', ref, nil, nil, ms, nm
+
+      it "returns #{ref && ms && nm < mt} agaist the referenced objective: " +
+        "exists = #{ref}, measure_status = #{ms}, normalized_measure = #{nm}; " +
+        "measure_threshold = #{mt}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureLessThanEvaluator
+          .new(rule_condition).call(activity).should == (ref && ms && nm > mt)
+      end
+    end
+
+    [true, false].repeated_permutation(2).map { |pair0|
+      [0.3, 0.7].repeated_permutation(2).map { |pair1|
+        pair0 + pair1
+      }
+    }.flatten(1).each do |pair|
+      it_behaves_like 'objective measure greater than evaluator', *pair
+    end
+  end
 end
