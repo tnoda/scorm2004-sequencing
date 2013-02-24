@@ -146,6 +146,17 @@ module Scorm2004
         end
       end
 
+      class AttemptedEvaluator < SequencingRuleConditionEvaluator
+        def initialize(rollup_condition)
+          super
+        end
+
+        def call(activity)
+          super
+          a.activity_attempt_count
+        end
+      end
+
 
       # @param description [Hash] a hash object that represents a <ruleCondition> element
       def initialize(description)

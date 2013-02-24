@@ -197,4 +197,21 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'completed evaluator', prog
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::AttemptedEvaluator do
+    shared_examples 'attempted evaluator' do |count|
+      include_context 'rule condition'
+      include_context 'activity', nil, nil, count
+
+      it "returns #{count > 0} against the activity: " +
+        "activity_attempt_count: #{count}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::AttemptedEvaluator
+          .new(rule_condition).call(activity).should == (count > 0)
+      end
+    end
+
+    [0, 1].each do |count|
+      it_behaves_like 'completed evaluator', count
+    end
+  end
 end
