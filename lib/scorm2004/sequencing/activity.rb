@@ -4,7 +4,7 @@ require 'scorm2004/sequencing/sequencing_rules_check_process'
 module Scorm2004
   module Sequencing
     class Activity
-      # Apply Sequencing Rules Check Process.
+      # Invoke Sequencing Rules Check Process.
       #
       # @return [String, nil] the action to apply or nil
       # @example
