@@ -170,6 +170,15 @@ module Scorm2004
         end
       end
 
+      class AlwaysEvaluator
+        def initialize(_)
+        end
+
+        def call(_)
+          true
+        end
+      end
+
       # @param description [Hash] a hash object that represents a <ruleCondition> element
       def initialize(description)
         @d = description

@@ -237,4 +237,11 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       end
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::AlwaysEvaluator do
+    it "always returns true" do
+      Scorm2004::Sequencing::SequencingRuleCondition::AlwaysEvaluator
+        .new(:dummy).call(:dummy).should be_true
+    end
+  end
 end
