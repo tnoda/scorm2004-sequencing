@@ -214,4 +214,27 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'completed evaluator', count
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::AttemptLimitExceededEvaluator do
+    shared_examples 'attemp limit exceeded evaluator' do |prof, count, lcal_control, lcal|
+      include_context 'rule condition'
+      include_context 'activity', prog, nil, count, lcal_control, lcal
+
+      it "returns #{lcal_control && count >= lcal } against the activity: " +
+        "activity_attempt_count = #{count}, " +
+        "limit_condition_attempt_limit_control = #{lcal_control}, " +
+        "limit_condition_attempt_limit = #{lcal}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::AttemptLimitExceededEvaluator
+          .new(rule_condition).call(activity).should == (lcal_control && count >= lcal)
+      end
+    end
+
+    [true, false].repeated_permutation(2).map do |pair0|
+      [1, 2].repeated_permutation(2).map do |pair1|
+        [pair0, pair1].transpose.flatten.each do |args|
+          it_behaves_like 'completed evaluator', *args
+        end
+      end
+    end
+  end
 end
