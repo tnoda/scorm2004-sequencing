@@ -180,4 +180,21 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'completed evaluator', *pair
     end
   end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::ActivityProgressKnownEvaluator do
+    shared_examples 'activity progress known evaluator' do |prog|
+      include_context 'rule condition'
+      include_context 'activity', prog
+
+      it "returns #{prog} against the activity: " +
+        "progress_status = #{prog}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::ActivityProgressKnownEvaluator
+          .new(rule_condition).call(activity).should == prog
+      end
+    end
+
+    [true, false].each do |prog|
+      it_behaves_like 'completed evaluator', prog
+    end
+  end
 end

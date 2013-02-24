@@ -135,6 +135,18 @@ module Scorm2004
         end
       end
 
+      class ActivityProgressKnownEvaluator < SequencingRuleConditionEvaluator
+        def initialize(rollup_condition)
+          super
+        end
+
+        def call(activity)
+          super
+          a.attempt_progress_status
+        end
+      end
+
+
       # @param description [Hash] a hash object that represents a <ruleCondition> element
       def initialize(description)
         @d = description
