@@ -151,4 +151,33 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       it_behaves_like 'objective measure greater than evaluator', *pair
     end
   end
+
+  shared_context 'activity' do |prog, comp, count, lcal_control, lcal|
+    let(:activity) do
+      a = double('activity')
+      a.stub(:attempt_progress_status => prog,
+        :attempt_completion_status => comp,
+        :activity_attempt_count => count,
+        :limit_condition_attempt_limit_control => lcal_control,
+        :limit_condition_attempt_limit => lcal)
+      a
+    end
+  end
+
+  describe Scorm2004::Sequencing::SequencingRuleCondition::CompletedEvaluator do
+    shared_examples 'completed evaluator' do |prog, comp|
+      include_context 'rule condition'
+      include_context 'activity', prog, comp
+
+      it "returns #{prog && comp} against the activity: " +
+        "progress_status = #{prog}, satisfied_status = #{comp}" do
+        Scorm2004::Sequencing::SequencingRuleCondition::CompletedEvaluator
+          .new(rule_condition).call(activity).should == (prog && comp)
+      end
+    end
+
+    [true, false].repeated_permutation(2).each do |pair|
+      it_behaves_like 'completed evaluator', *pair
+    end
+  end
 end
