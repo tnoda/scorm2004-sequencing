@@ -18,7 +18,7 @@ module Scorm2004
       private
 
       def rollup_considerations
-        sequencing['rollup_considerations'] || {}
+        sequencing['rollup_considerations'].to_h
       end
     end
   end
