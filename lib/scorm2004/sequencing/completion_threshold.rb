@@ -19,7 +19,7 @@ module Scorm2004
       private
 
       def completion_threshold
-        item['completion_threshold'] || {}
+        item['completion_threshold'].to_h
       end
     end
   end

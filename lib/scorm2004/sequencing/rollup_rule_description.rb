@@ -4,7 +4,7 @@ module Scorm2004
   module Sequencing
     module RollupRuleDescription
       def action
-        action = (rule['rollup_action'] || {})['action']
+        action = rule['rollup_action'].to_h['action']
         case action
         when 'satisfied'
           'Satisfied'
@@ -20,7 +20,7 @@ module Scorm2004
       end
 
       def condition_combination
-        combi = (rule['rollup_conditions'] || {})['condition_combination']
+        combi = rule['rollup_conditions'].to_h['condition_combination']
         (/all/i =~ combi) ? 'All' : 'Any'
       end
 
@@ -42,8 +42,8 @@ module Scorm2004
       end
 
       def conditions
-        ((rule['rollup_conditions'] || {})['rollup_conditions'] || []).map do |condition|
-          RollupCondition.build(condition)
+        rule['rollup_conditions'].to_h['rollup_conditions'].to_a.map do |desc|
+          RollupCondition.new(desc)
         end
       end
 

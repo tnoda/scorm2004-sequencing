@@ -12,7 +12,7 @@ module Scorm2004
       #   activity.rollup_rules('Satisfied', 'Not Satisfied')
       #
       def rollup_rules(*args)
-        bag = ((item['rollup_rules'] || {})['rollup_rules'] || []).map do |rollup_rule|
+        bag = item['rollup_rules'].to_h['rollup_rules'].to_a.map do |rollup_rule|
           RollupRule.new(rollup_rule)
         end
         if args.empty?

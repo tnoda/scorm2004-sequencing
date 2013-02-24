@@ -22,13 +22,14 @@ module Scorm2004
       private
 
       def secondary_objectives
-        ((sequencing['objectives'] || {})['objectives'] || []).map do |o|
-          Objective.new(self, o, status)
+        sequencing['objectives'].to_h['objectives'].to_a.map do |desc|
+          Objective.new(self, desc, status)
         end
       end
+
       def primary_objective
-        po = (sequencing['objectives'] || {})['primary_objective']
-        po && Objective.new(self, po, status)
+        desc = sequencing['objectives'].to_h['primary_objective']
+        desc && Objective.new(self, desc, status)
       end
     end
   end

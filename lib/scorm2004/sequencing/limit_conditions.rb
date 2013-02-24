@@ -22,7 +22,7 @@ module Scorm2004
       private
 
       def limit_conditions
-        sequencing['limit_conditions'] || {}
+        sequencing['limit_conditions'].to_h
       end
     end
   end

@@ -6,18 +6,18 @@ module Scorm2004
     class SequencingRule
       module Description
         def condition_combination
-          ('any' == (@d['rule_conditions'] || {})['condition_combination']) ? 'Any' : 'All'
+          ('any' == @d['rule_conditions'].to_h['condition_combination']) ? 'Any' :'All'
         end
 
         def rule_conditions
-          ((@d['rule_conditions'] || {})['rule_conditions'] || []).map do |rule_condition|
+          @d['rule_conditions'].to_h['rule_conditions'].to_a.map do |rule_condition|
             SequencingRuleCondition.new(rule_condition)
           end
         end
         alias :conditions :rule_conditions
 
         def rule_action
-          normalize((@d['rule_action'] || {})['action'])
+          normalize(@d['rule_action'].to_h['action'])
         end
         alias :action :rule_action
 

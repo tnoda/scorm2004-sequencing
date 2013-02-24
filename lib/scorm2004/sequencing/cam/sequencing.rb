@@ -5,13 +5,13 @@ module Scorm2004
     module Cam
       module Sequencing
         def sequencing
-          (referenced_sequencing || {}).merge(local_sequencing)
+          referenced_sequencing.to_h.merge(local_sequencing)
         end
 
         private
 
         def local_sequencing
-          item['sequencing'] || {}
+          item['sequencing'].to_h
         end
 
         def referenced_sequencing
@@ -24,7 +24,7 @@ module Scorm2004
         end
 
         def sequencing_collection
-          (manifest['sequencing_collection'] || {})['sequencings'] || []
+          manifest['sequencing_collection'].to_h['sequencings'].to_a
         end
       end
     end
