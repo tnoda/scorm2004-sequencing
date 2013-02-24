@@ -113,7 +113,7 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       include_context 'rule condition', mt
       include_context 'activity with referenced objective', ref, nil, nil, ms, nm
 
-      it "returns #{ref && ms && nm > mt} agaist the referenced objective: " +
+      it "returns #{ref && ms && nm > mt} against the referenced objective: " +
         "exists = #{ref}, measure_status = #{ms}, normalized_measure = #{nm}; " +
         "measure_threshold = #{mt}" do
         Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureGreaterThanEvaluator
@@ -135,7 +135,7 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
       include_context 'rule condition', mt
       include_context 'activity with referenced objective', ref, nil, nil, ms, nm
 
-      it "returns #{ref && ms && nm < mt} agaist the referenced objective: " +
+      it "returns #{ref && ms && nm < mt} against the referenced objective: " +
         "exists = #{ref}, measure_status = #{ms}, normalized_measure = #{nm}; " +
         "measure_threshold = #{mt}" do
         Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureLessThanEvaluator
@@ -211,12 +211,12 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
     end
 
     [0, 1].each do |count|
-      it_behaves_like 'completed evaluator', count
+      it_behaves_like 'attempted evaluator', count
     end
   end
 
   describe Scorm2004::Sequencing::SequencingRuleCondition::AttemptLimitExceededEvaluator do
-    shared_examples 'attemp limit exceeded evaluator' do |prof, count, lcal_control, lcal|
+    shared_examples 'attempt limit exceeded evaluator' do |prof, count, lcal_control, lcal|
       include_context 'rule condition'
       include_context 'activity', prog, nil, count, lcal_control, lcal
 
