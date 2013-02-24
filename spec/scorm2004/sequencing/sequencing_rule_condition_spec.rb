@@ -152,14 +152,15 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
     end
   end
 
-  shared_context 'activity' do |prog, comp, count, lcal_control, lcal|
+  shared_context 'activity' do |prog, comp, count, lcal_control, lcal, aprog|
     let(:activity) do
       a = double('activity')
       a.stub(:attempt_progress_status => prog,
         :attempt_completion_status => comp,
         :activity_attempt_count => count,
         :limit_condition_attempt_limit_control => lcal_control,
-        :limit_condition_attempt_limit => lcal)
+        :limit_condition_attempt_limit => lcal,
+        :activity_progress_status => aprog)
       a
     end
   end
@@ -216,24 +217,22 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
   end
 
   describe Scorm2004::Sequencing::SequencingRuleCondition::AttemptLimitExceededEvaluator do
-    shared_examples 'attempt limit exceeded evaluator' do |prof, count, lcal_control, lcal|
+    shared_examples 'attempt limit exceeded evaluator' do |count, lcal_control, lcal, aprog|
       include_context 'rule condition'
-      include_context 'activity', prog, nil, count, lcal_control, lcal
+      include_context 'activity', nil, nil, count, lcal_control, lcal, aprog
 
-      it "returns #{lcal_control && count >= lcal } against the activity: " +
+      it "returns #{aprog && lcal_control && count >= lcal } against the activity: " +
         "activity_attempt_count = #{count}, " +
         "limit_condition_attempt_limit_control = #{lcal_control}, " +
         "limit_condition_attempt_limit = #{lcal}" do
         Scorm2004::Sequencing::SequencingRuleCondition::AttemptLimitExceededEvaluator
-          .new(rule_condition).call(activity).should == (lcal_control && count >= lcal)
+          .new(rule_condition).call(activity).should == (aprog && lcal_control && count >= lcal)
       end
     end
 
-    [true, false].repeated_permutation(2).map do |pair0|
-      [1, 2].repeated_permutation(2).map do |pair1|
-        [pair0, pair1].transpose.flatten.each do |args|
-          it_behaves_like 'completed evaluator', *args
-        end
+    [1, 2].repeated_permutation(2).map do |pair0|
+      [true, false].repeated_permutation(2).map do |pair1|
+        it_behaves_like 'attempt limit exceeded evaluator', [pair0, pair1].transpose.flatten
       end
     end
   end
