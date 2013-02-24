@@ -16,7 +16,7 @@ module Scorm2004
       private
 
       def delivery_controls
-        (item['sequencing'] || {})['delivery_controls'] || {}
+        sequencing['delivery_controls'].to_h
       end
     end
   end

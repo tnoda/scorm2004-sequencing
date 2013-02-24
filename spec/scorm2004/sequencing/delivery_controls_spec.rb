@@ -9,7 +9,7 @@ describe Scorm2004::Sequencing::DeliveryControls do
   end
 
   describe 'defaults' do
-    before { subject.stub(:item).and_return({}) }
+    before { subject.stub(:sequencing).and_return({}) }
     its(:tracked) { should be_true }
     its(:completion_set_by_content) { should be_false }
     its(:objective_set_by_content) { should be_false }
@@ -22,8 +22,7 @@ describe Scorm2004::Sequencing::DeliveryControls do
         'completion_set_by_content' => true,
         'objective_set_by_content' => true
       }
-      item = { 'sequencing' => { 'delivery_controls' => flipped } }
-      subject.stub(:item).and_return(item)
+      subject.stub(:sequencing => { 'delivery_controls' => flipped } )
     end
 
     its(:tracked) { should be_false }
