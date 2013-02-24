@@ -46,6 +46,7 @@ module Scorm2004
 
       class SequencingRuleConditionEvaluator
         attr_reader :rule_condition, :activity
+        alias :a :activity
 
         extend Forwardable
         def_delegators :@rule_condition, :measure_threshold
