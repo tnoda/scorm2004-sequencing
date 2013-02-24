@@ -131,7 +131,7 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
   end
 
   describe Scorm2004::Sequencing::SequencingRuleCondition::ObjectiveMeasureLessThanEvaluator do
-    shared_examples 'objective measure greater than evaluator' do |ref, ms, nm, mt|
+    shared_examples 'objective measure less than evaluator' do |ref, ms, nm, mt|
       include_context 'rule condition', mt
       include_context 'activity with referenced objective', ref, nil, nil, ms, nm
 
