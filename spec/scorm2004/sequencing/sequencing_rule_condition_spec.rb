@@ -194,7 +194,7 @@ describe Scorm2004::Sequencing::SequencingRuleCondition do
     end
 
     [true, false].each do |prog|
-      it_behaves_like 'completed evaluator', prog
+      it_behaves_like 'activity progress known evaluator', prog
     end
   end
 
