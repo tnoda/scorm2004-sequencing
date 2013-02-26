@@ -29,4 +29,19 @@ describe Scorm2004::Sequencing::SequencingRule do
       its(:rule_action) { should == 'Stop Forward Traversal'}
     end
   end
+
+  describe '#check' do
+    it 'responds to #check' do
+      described_class.new(:dummy).should respond_to(:check)
+    end
+
+    it 'invokes SequencingRuleCheckSubprocess' do
+      subproc = double('sequencing rule check subprocess')
+      subproc.should_receive(:call)
+      klass = double('SequencingRuleCheckSubprocess')
+      klass.should_receive(:new).and_return(subproc)
+      stub_const('Scorm2004::Sequencing::SequencingRuleCheckSubprocess', klass)
+      described_class.new(:dummy).check(:dummy)
+    end
+  end
 end
