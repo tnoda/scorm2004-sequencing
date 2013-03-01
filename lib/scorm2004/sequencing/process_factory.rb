@@ -4,6 +4,7 @@ module Scorm2004
   module Sequencing
     class ProcessFactory
       ACTIVITY_TREE_PROCESSES = [
+        :termination_request_process, # TB.2.3
         :sequencing_exit_action_rules_subprocess,
         :terminate_descendent_attempts_process
       ]
