@@ -29,6 +29,8 @@ module Scorm2004
         @tree = tree
       end
 
+      private
+
       def classify(sym)
         Sequencing.const_get(sym.to_s.split('_').map(&:capitalize).join(''))
       end
