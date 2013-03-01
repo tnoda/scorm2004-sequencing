@@ -21,12 +21,17 @@ module Scorm2004
       extend Forwardable
       def_delegators(:@tree, *ACTIVITY_TREE_METHODS)
       def_delegators(:current_activity, *CURRENT_ACTIVITY_METHODS)
-      def_delegators(:@process_factory, *ProcessFactory::AVAILABLE_PROCESSES)
+      def_delegators(:process_factory, *ProcessFactory::AVAILABLE_PROCESSES)
 
       # @param tree [ActivityTree] the activity tree
       def initialize(tree)
         @tree = tree
-        @process_factory = ProcessFactory.new(tree)
+      end
+
+      private
+
+      def process_factory
+        @process_factory ||= ProcessFactory.new(@tree)
       end
     end
   end
