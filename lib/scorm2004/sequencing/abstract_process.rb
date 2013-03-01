@@ -1,6 +1,4 @@
 require 'scorm2004/sequencing'
-require 'scorm2004/sequencing/sequencing_exception'
-require 'scorm2004/sequencing/process_factory'
 require 'forwardable'
 
 module Scorm2004

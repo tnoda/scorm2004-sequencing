@@ -1,6 +1,4 @@
 require 'scorm2004/sequencing'
-require 'scorm2004/sequencing/sequencing_exit_action_rules_subprocess'
-require 'scorm2004/sequencing/terminate_descendent_attempts_process'
 
 module Scorm2004
   module Sequencing
