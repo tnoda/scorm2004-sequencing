@@ -10,6 +10,10 @@ module Scorm2004
         :terminate_descendent_attempts_process
       ]
 
+      AVAILABLE_PROCESSES = [
+        ACTIVITY_TREE_PROCESSES
+      ].flatten
+
       class << self
         def register(*args)
           args.each do |m|

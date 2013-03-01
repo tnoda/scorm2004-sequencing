@@ -3,6 +3,12 @@ require 'scorm2004/sequencing/process_factory'
 
 describe Scorm2004::Sequencing::ProcessFactory do
   Scorm2004::Sequencing::ProcessFactory::ACTIVITY_TREE_PROCESSES.each do |sym|
+    describe 'AVAILABLE_PROCESSES' do
+      it 'is not empty' do
+        Scorm2004::Sequencing::ProcessFactory::ACTIVITY_TREE_PROCESSES.should_not be_empty
+      end
+    end
+
     describe "##{sym}" do
       it "instantiates #{sym.to_s.split('_').map(&:capitalize).join('')}" do
         def classify(sym)
