@@ -6,6 +6,8 @@ module Scorm2004
     class AbstractProcess
       include SequencingException
 
+      attr_reader :tree
+
       ACTIVITY_TREE_METHODS = [
         :current_activity, :current_activity=,
         :suspended_activity, :suspended_activity=,
