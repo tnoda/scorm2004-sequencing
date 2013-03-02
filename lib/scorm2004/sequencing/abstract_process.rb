@@ -9,9 +9,7 @@ module Scorm2004
       attr_reader :tree
 
       ACTIVITY_TREE_METHODS = [
-        :current_activity, :current_activity=,
-        :suspended_activity, :suspended_activity=,
-        :root_activity
+        :current_activity, :suspended_activity, :root_activity
       ]
 
       CURRENT_ACTIVITY_METHODS = [
@@ -21,7 +19,7 @@ module Scorm2004
       ]
 
       extend Forwardable
-      def_delegators(:@tree, *ACTIVITY_TREE_METHODS)
+      def_delegators(:tree, *ACTIVITY_TREE_METHODS)
       def_delegators(:current_activity, *CURRENT_ACTIVITY_METHODS)
       def_delegators(:process_factory, *ProcessFactory::AVAILABLE_PROCESSES)
 
