@@ -28,6 +28,10 @@ module Scorm2004
         @tree = tree
       end
 
+      def set_current_activity(a)
+        @tree.current_activity = a
+      end
+
       private
 
       def process_factory
