@@ -47,4 +47,13 @@ describe Scorm2004::Sequencing::AbstractProcess do
       end
     end
   end
+
+  describe '#set_current_activity' do
+    it 'sets a current activity' do
+      tree = double("activity tree")
+      tree.should_receive(:current_activity=).with(:dummy_activity)
+      proc = described_class.new(tree)
+      proc.set_current_activity(:dummy_activity)
+    end
+  end
 end
